@@ -8,6 +8,8 @@ require "administrate/field/number"
 require "administrate/field/polymorphic"
 require "administrate/field/select"
 require "administrate/field/string"
+require "administrate/field/uuid"
+require "administrate/field/array"
 require "administrate/field/text"
 
 module Administrate
