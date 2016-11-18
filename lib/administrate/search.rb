@@ -34,7 +34,16 @@ module Administrate
     end
 
     def search_terms
-      ["%#{term.downcase}%"] * search_attributes.count
+      search_attributes.map do |attr|
+        case attribute_types[attr].searchable?
+        when :exact
+          term.downcase
+        when :array
+          term.downcase
+        else
+          "%#{term.downcase}%"
+        end
+      end
     end
 
     def search_attributes
