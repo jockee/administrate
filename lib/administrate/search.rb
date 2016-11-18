@@ -21,7 +21,15 @@ module Administrate
     delegate :resource_class, to: :resolver
 
     def query
-      search_attributes.map { |attr| "lower(#{attr}) LIKE ?" }.join(" OR ")
+      search_attributes.map do |attr|
+        if attr.searchable? == :exact
+          "#{attr} = ?"
+        elsif attr.searchable? == :array
+          "#{attr} = ?"
+        else
+          "lower(#{attr}) LIKE ?"
+        end
+      end.join(" OR ")
     end
 
     def search_terms
