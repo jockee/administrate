@@ -22,9 +22,10 @@ module Administrate
 
     def query
       search_attributes.map do |attr|
-        if attr.searchable? == :exact
+        case attribute_types[attr].searchable?
+        when :exact
           "#{attr} = ?"
-        elsif attr.searchable? == :array
+        when :array
           "#{attr} = ?"
         else
           "lower(#{attr}) LIKE ?"
