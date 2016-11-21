@@ -23,11 +23,12 @@ module Administrate
     def query
       search_attributes.map do |attr|
         case attribute_types[attr].searchable?
-        when :uuid && term_uuid?
+        when :uuid
+          next unless term_uuid?
           "#{attr} = ?"
         when :array
           "? = any(#{attr})"
-        when true
+        else
           "lower(#{attr}) LIKE ?"
         end
       end.compact.join(" OR ")
@@ -36,11 +37,12 @@ module Administrate
     def search_terms
       search_attributes.map do |attr|
         case attribute_types[attr].searchable?
-        when :uuid && term_uuid?
+        when :uuid
+          next unless term_uuid?
           term.downcase
         when :array
           term.downcase
-        when true
+        else
           "%#{term.downcase}%"
         end
       end.compact
