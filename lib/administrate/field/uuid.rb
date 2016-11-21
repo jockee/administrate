@@ -4,7 +4,7 @@ module Administrate
   module Field
     class Uuid < Field::Base
       def self.searchable?
-        :exact
+        :uuid
       end
 
       def truncate
