@@ -26,7 +26,7 @@ module Administrate
         when :uuid && term_uuid?
           "#{attr} = ?"
         when :array
-          "? = any(attr)"
+          "? = any(#{attr})"
         when true
           "lower(#{attr}) LIKE ?"
         end
